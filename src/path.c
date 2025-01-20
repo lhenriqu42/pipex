@@ -6,16 +6,16 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:01:54 by lhenriqu          #+#    #+#             */
-/*   Updated: 2024/12/30 18:34:24 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:58:35 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_env get_env_variables(char **envp)
+t_env	get_env_variables(char **envp)
 {
-	int i;
-	t_env env;
+	int		i;
+	t_env	env;
 
 	i = 0;
 	ft_bzero(&env, sizeof(t_env));
@@ -30,11 +30,11 @@ t_env get_env_variables(char **envp)
 	return (env);
 }
 
-static char *join_paths(char *absolute, char *relative)
+static char	*join_paths(char *absolute, char *relative)
 {
-	char total_size;
-	int absolute_size;
-	char *str;
+	char	total_size;
+	int		absolute_size;
+	char	*str;
 
 	if (!absolute)
 		return (NULL);
@@ -48,10 +48,10 @@ static char *join_paths(char *absolute, char *relative)
 	return (str);
 }
 
-static char *search_in_path(char *cmd, t_env env)
+static char	*search_in_path(char *cmd, t_env env)
 {
-	int i;
-	char *new_cmd;
+	int		i;
+	char	*new_cmd;
 
 	i = 0;
 	new_cmd = NULL;
@@ -61,7 +61,7 @@ static char *search_in_path(char *cmd, t_env env)
 	{
 		new_cmd = join_paths(env.path[i], cmd);
 		if (access(new_cmd, F_OK | X_OK) == 0)
-			break;
+			break ;
 		free(new_cmd);
 		new_cmd = NULL;
 		i++;
@@ -69,9 +69,9 @@ static char *search_in_path(char *cmd, t_env env)
 	return (new_cmd);
 }
 
-char *handle_path(char *cmd, t_env env)
+char	*handle_path(char *cmd, t_env env)
 {
-	char *new_cmd;
+	char	*new_cmd;
 
 	new_cmd = NULL;
 	if (ft_strchr(cmd, '/') == NULL)

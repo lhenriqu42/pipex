@@ -37,6 +37,7 @@ LIB_SOURCES = \
 	ft_isalpha.c \
 	ft_isascii.c \
 	ft_isdigit.c \
+	ft_strncpy.c \
 	ft_isprint.c \
 	ft_strjoin.c \
 	ft_strlcat.c \
@@ -53,7 +54,8 @@ LIB_SOURCES = \
 	ft_putstr_fd.c \
 	ft_atoi_base.c \
 	ft_putendl_fd.c \
-	ft_putchar_fd.c 
+	ft_putchar_fd.c \
+	ft_free_matrix.c 
 
 LIB_OBJECTS = $(addprefix $(LIB_BIN_PATH), $(LIB_SOURCES:%.c=%.o))
 

@@ -6,13 +6,13 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 19:12:39 by lhenriqu          #+#    #+#             */
-/*   Updated: 2024/12/30 21:58:37 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:47:06 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void close_fds(t_command command)
+void	close_fds(t_command command)
 {
 	if (command.file_in_fd != -1)
 		close(command.file_in_fd);
@@ -22,9 +22,9 @@ void close_fds(t_command command)
 	close(command.pipe_fd[1]);
 }
 
-void free_args(char **args)
+void	free_args(char **args)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (args && args[i])
@@ -33,10 +33,9 @@ void free_args(char **args)
 		i++;
 	}
 	free(args);
-	
 }
 
-void free_all(t_command command)
+void	free_all(t_command command)
 {
 	free(command.env.home);
 	free_args(command.env.path);

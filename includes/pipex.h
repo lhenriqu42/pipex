@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/20 12:47:16 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/01/20 12:47:55 by lhenriqu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_H
 # define PIPEX_H
 
@@ -42,7 +54,7 @@ typedef struct s_command
 {
 	int		file_in_fd;
 	int		file_out_fd;
-	int     pipe_fd[2];
+	int		pipe_fd[2];
 	int		pid[2];
 	char	*cmd1;
 	char	*cmd2;
@@ -55,8 +67,6 @@ void	exec_process(t_command command, char *cmd, int type);
 char	*handle_path(char*cmd, t_env env);
 void	close_fds(t_command command);
 void	free_all(t_command command);
-void	free_args(char** args);
-
-
+void	free_args(char **args);
 
 #endif

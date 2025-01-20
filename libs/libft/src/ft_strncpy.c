@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_functions.c                                 :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 17:36:04 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/01/17 16:10:23 by lhenriqu         ###   ########.fr       */
+/*   Created: 2025/01/07 16:18:59 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/01/17 16:09:46 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-size_t	ft_putchar(char c)
+char	*ft_strncpy(char *dest, const char *src, size_t n)
 {
-	write(1, &c, 1);
-	return (1);
-}
+	size_t	i;
 
-size_t	ft_putstr(char *str)
-{
-	int	len;
-
-	if (str == NULL)
-		return (ft_putstr("(null)"));
-	len = 0;
-	while (str[len])
-		len++;
-	write(1, str, len);
-	return (len);
+	i = 0;
+	while (src[i] && (i < n))
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
 }
