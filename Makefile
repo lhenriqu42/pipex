@@ -1,5 +1,6 @@
 # NAME
 NAME := pipex
+VALGRIND_LOG := valgrind.log
 
 # FLAGS
 CFLAGS := -O3 -fno-stack-protector -Wall -Wextra -g3 -Werror
@@ -68,4 +69,14 @@ fclean: clean
 re: fclean
 	@make --no-print-directory
 
-.PHONY: all clean fclean re print libft
+valgrind: all
+	@valgrind --leak-check=full \
+	--show-reachable=yes \
+	--track-fds=yes \
+	--show-leak-kinds=all -s \
+	--track-origins=yes \
+	--log-file=$(VALGRIND_LOG) \
+	./$(NAME) infile ls ls outfile
+	@cat $(VALGRIND_LOG)
+
+.PHONY: all clean fclean re print libft valgrind

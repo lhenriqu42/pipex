@@ -1,5 +1,5 @@
 valgrind.log
-
 pipex
-
 bin
+infile
+outfile
