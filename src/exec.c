@@ -6,64 +6,52 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:46:46 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/01/20 12:50:36 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/01/23 14:02:11 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	set_dup2(int fd_in, int fd_out)
+static void	set_dup2(int fd_in, int fd_out)
 {
 	dup2(fd_in, STDIN_FILENO);
 	dup2(fd_out, STDOUT_FILENO);
 }
 
-static void	change_input_and_output(t_command command, int type)
+static void	change_input_and_output(t_pipex *pipex, int type)
 {
 	if (type == FIRST)
-		set_dup2(command.file_in_fd, command.pipe_fd[WRITE_FD]);
+		set_dup2(pipex->file_in_fd, pipex->pipe[WRITE_FD]);
 	else if (type == LAST)
-		set_dup2(command.pipe_fd[READ_FD], command.file_out_fd);
+		set_dup2(pipex->pipe[READ_FD], pipex->file_out_fd);
 }
 
-static char	*error_message(char *cmd, int *return_code)
+static char	*error_message(char *cmd)
 {
 	if (!cmd || access(cmd, F_OK) != 0)
-	{
-		*return_code = 127;
 		return (C_ERROR "command not found" C_BREAK);
-	}
 	else if (access(cmd, X_OK) != 0)
-	{
-		*return_code = 126;
 		return (C_ERROR "permission denied" C_BREAK);
-	}
 	return ("");
 }
 
-void	exec_process(t_command command, char *cmd, int type)
+void	exec_process(t_pipex *pipex, char *cmd, int type)
 {
-	int		ret_code;
 	char	*new_cmd;
 	char	**args;
 
-	ret_code = 1;
-	if ((type == FIRST && command.file_in_fd != 1)
-		|| (type == LAST && command.file_out_fd != 1))
+	args = ft_split(cmd, ' ');
+	new_cmd = handle_path(args[0], pipex->env);
+	if (!new_cmd || access(new_cmd, F_OK | X_OK))
 	{
-		args = ft_split(cmd, ' ');
-		new_cmd = handle_path(args[0], command.env);
-		if (new_cmd && access(new_cmd, F_OK | X_OK) == 0)
-		{
-			change_input_and_output(command, type);
-			close_fds(command);
-			execve(new_cmd, args, command.envp);
-		}
-		ft_printf_fd(2, "%s: %s\n", error_message(new_cmd, &ret_code), args[0]);
+		ft_printf_fd(2, "%s: %s\n", error_message(new_cmd), args[0]);
 		free(new_cmd);
-		free_args(args);
+		ft_free_matrix(args);
+		close_fds(pipex);
+		free_all(pipex);
+		exit(1);
 	}
-	close_fds(command);
-	free_all(command);
-	exit(ret_code);
+	change_input_and_output(pipex, type);
+	close_fds(pipex);
+	execve(new_cmd, args, pipex->envp);
 }

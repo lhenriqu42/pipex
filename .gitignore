@@ -3,3 +3,6 @@ pipex
 bin
 infile
 outfile
+in
+out
+.vscode

@@ -22,7 +22,7 @@ VIOLET := \033[38;5;208m
 COLOR_LIMITER := \033[0m
 
 # SOURCES AND OBJECTS
-FILES := main.c exec.c path.c cleaner.c
+FILES := main.c exec.c path.c cleaner.c init.c utils.c
 SRCS := $(addprefix $(SRC_PATH), $(FILES))
 OBJ := $(addprefix $(BIN_PATH), $(FILES:%.c=%.o))
 
