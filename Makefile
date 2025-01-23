@@ -59,6 +59,7 @@ $(BIN_PATH)%.o: $(SRC_PATH)%.c
 clean:
 	@printf "$(RED)[Removing Objects...]$(COLOR_LIMITER)\n"
 	@make clean -C $(LIB_PATH) --no-print-directory
+	@rm -rf $(VALGRIND_LOG)
 	@rm -rf $(BIN_PATH)
 
 fclean: clean
