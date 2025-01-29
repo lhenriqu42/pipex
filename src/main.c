@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 13:22:25 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/01/23 13:35:52 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/01/29 14:34:20 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	main(int argc, char *argv[], char *envp[])
 	init_pipex(argc, argv, envp);
 	pipe(pipex->pipe);
 	exec_cmd1(pipex);
-	waitpid(pipex->pid[0], 0, 0);
 	exec_cmd2(pipex);
-	waitpid(pipex->pid[1], 0, 0);
 	close_fds(pipex);
+	waitpid(pipex->pid[0], 0, 0);
+	waitpid(pipex->pid[1], 0, 0);
 	free_all(pipex);
 	return (0);
 }
