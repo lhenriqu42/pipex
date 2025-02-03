@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_matrix.c                                   :+:      :+:    :+:   */
+/*   ft_checkw.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 10:39:40 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/02/03 15:44:53 by lhenriqu         ###   ########.fr       */
+/*   Created: 2025/01/31 12:25:18 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/01/31 12:35:15 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_matrix(void **matrix, void (*free_func)(void *))
+int	ft_checkw(int fd)
 {
-	int	i;
-
-	i = 0;
-	while (matrix[i])
-	{
-		free_func(matrix[i]);
-		i++;
-	}
-	free(matrix);
+	return (write(fd, "\0", 1) == 1);
 }

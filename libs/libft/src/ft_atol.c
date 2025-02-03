@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_matrix.c                                   :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 10:39:40 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/02/03 15:44:53 by lhenriqu         ###   ########.fr       */
+/*   Created: 2024/10/11 09:37:33 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/01/30 16:22:18 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_matrix(void **matrix, void (*free_func)(void *))
+long	ft_atol(const char *str)
 {
-	int	i;
+	long	num;
+	long	sign;
 
-	i = 0;
-	while (matrix[i])
+	sign = 1;
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	num = 0;
+	if (*str == '-' || *str == '+')
 	{
-		free_func(matrix[i]);
-		i++;
+		if (*str == '-')
+			sign *= -1;
+		str++;
 	}
-	free(matrix);
+	while (*str >= '0' && *str <= '9')
+	{
+		num = num * 10 + (*str - '0');
+		str++;
+	}
+	return (num * sign);
 }

@@ -37,6 +37,9 @@ int		ft_isdigit(int c);
 // Returns 1 if the character is a printable character (32-126)
 int		ft_isprint(int c);
 
+// Returns 1 if the file descriptor is writable (i.e., able to write a byte).
+int		ft_checkw(int fd);
+
 // Returns the lowercase equivalent of a character if it is uppercase
 int		ft_tolower(int c);
 
@@ -45,6 +48,9 @@ int		ft_toupper(int c);
 
 // Converts a string to an integer (base 10)
 int		ft_atoi(const char *str);
+
+// Converts a string to an long integer (base 10)
+long	ft_atol(const char *str);
 
 // Converts a string to an integer for a specific base
 int		ft_atoi_base(const char *str, int str_base);
@@ -115,8 +121,8 @@ void	*ft_memmove(void *dest, const void *src, size_t n);
 // Sets a block of memory to zero
 void	ft_bzero(void *s, size_t n);
 
-// Frees all memory allocated for a matrix (array of strings)
-void	ft_free_matrix(char **matrix);
+// Frees the matrix elements using (*free_func) and then the matrix itself.
+void	ft_free_matrix(void **matrix, void (*free_func)(void *));
 
 // Writes an integer to the specified file descriptor
 void	ft_putnbr_fd(int n, int fd);
