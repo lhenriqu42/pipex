@@ -1,5 +1,6 @@
 valgrind.log
 pipex
+pipex_bonus
 bin
 infile
 outfile
