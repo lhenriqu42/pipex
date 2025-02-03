@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:46:46 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/01/23 14:02:11 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:55:31 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	exec_process(t_pipex *pipex, char *cmd, int type)
 	{
 		ft_printf_fd(2, "%s: %s\n", error_message(new_cmd), args[0]);
 		free(new_cmd);
-		ft_free_matrix(args);
+		ft_free_matrix((void **)args, free);
 		close_fds(pipex);
 		free_all(pipex);
 		exit(1);

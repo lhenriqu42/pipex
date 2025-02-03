@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 19:12:39 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/01/23 13:56:29 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:58:49 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	free_all(t_pipex *pipex)
 	if (pipex->env.home)
 		free(pipex->env.home);
 	if (pipex->env.path)
-		ft_free_matrix(pipex->env.path);
+		ft_free_matrix((void **)pipex->env.path, free);
 }
