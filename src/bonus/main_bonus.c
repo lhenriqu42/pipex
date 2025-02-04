@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 13:22:25 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/02/04 15:16:57 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:40:33 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	exec_cmds(t_pipex *pipex)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < pipex->cmdc)
 	{
@@ -30,7 +30,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipex	*pipex;
 	int		i;
-	
+
 	if (argc < 5)
 		handle_error(E_INVALID_ARGS);
 	else if (!ft_strncmp(argv[1], "here_doc", 8) && (argc < 6))

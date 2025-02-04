@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 12:30:42 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/02/04 15:58:48 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:40:02 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	fill_cmd(int cmdc, char *cmdv[], t_cmd *cmds, int i)
 {
 	static int	last_pipe_read;
 	int			pipe_fd[2];
-	
+
 	cmds[i].cmd = cmdv[i];
 	if (i == 0)
 	{

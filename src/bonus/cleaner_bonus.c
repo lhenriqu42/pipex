@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 19:12:39 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/02/04 12:31:27 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:39:44 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	close_fds(t_pipex *pipex)
 		i++;
 	}
 }
-
 
 void	free_all(t_pipex *pipex)
 {

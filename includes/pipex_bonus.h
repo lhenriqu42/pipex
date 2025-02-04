@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 12:47:16 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/02/04 16:08:26 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:42:45 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 # define O_W O_WRONLY
 # define O_R O_RDONLY
 # define O_A O_APPEND
-
 
 enum e_fd
 {
@@ -76,16 +75,22 @@ typedef struct s_pipex
 	t_env	env;
 }	t_pipex;
 
+// INIT
+void	init_pipex(t_pipex *pipex, int argc, char *argv[], char *envp[]);
+void	here_doc(t_pipex *pipex, char *delimiter);
+
+// UTILS
 t_pipex	*get_pipex(void);
+void	free_all(t_pipex *pipex);
+void	close_fds(t_pipex *pipex);
+void	print_error(char *message);
 void	handle_error(t_error error);
+
+// PATH
 t_env	get_env_variables(char **envp);
 char	*handle_path(char*cmd, t_env env);
 
+// EXEC
 void	exec_process(t_cmd cmd);
-void	init_pipex(t_pipex *pipex, int argc, char *argv[], char *envp[]);
-void	here_doc(t_pipex *pipex, char *delimiter);
-void	print_error(char *message);
-void	close_fds(t_pipex *pipex);
-void	free_all(t_pipex *pipex);
 
 #endif
