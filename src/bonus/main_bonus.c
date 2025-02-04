@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 13:22:25 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/02/04 12:47:58 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:16:57 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ int	main(int argc, char *argv[], char *envp[])
 	t_pipex	*pipex;
 	int		i;
 	
-	pipex = get_pipex();
 	if (argc < 5)
-	{
-		print_error("Expected: ./pipex <file_in> <cmd1> ... <cmd2> <file_out>");
-		return (1);
-	}
-	init_pipex(argc, argv, envp);
+		handle_error(E_INVALID_ARGS);
+	else if (!ft_strncmp(argv[1], "here_doc", 8) && (argc < 6))
+		handle_error(E_INVALID_HEREDOC);
+	pipex = get_pipex();
+	init_pipex(pipex, argc, argv, envp);
 	exec_cmds(pipex);
 	close_fds(pipex);
 	i = 0;

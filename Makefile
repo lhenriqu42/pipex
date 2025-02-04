@@ -2,6 +2,9 @@
 NAME := pipex
 VALGRIND_LOG := valgrind.log
 
+HEADER = $(HEADER_PATH)pipex.h
+BONUS_HEADER = $(HEADER_PATH)pipex_bonus.h
+
 # FLAGS
 CFLAGS := -O3 -fno-stack-protector -Wall -Wextra -g3 -Werror
 
@@ -29,7 +32,7 @@ OBJ := $(addprefix $(BIN_PATH), $(FILES:%.c=%.o))
 # BONUS
 BONUS_NAME := pipex_bonus
 BONUS_SRC_PATH := ./src/bonus/
-BONUS_FILES := main_bonus.c exec_bonus.c path_bonus.c cleaner_bonus.c init_bonus.c utils_bonus.c
+BONUS_FILES := main_bonus.c exec_bonus.c path_bonus.c cleaner_bonus.c init_bonus.c utils_bonus.c error_bonus.c here_doc_bonus.c
 BONUS_SRCS := $(addprefix $(BONUS_SRC_PATH), $(BONUS_FILES))
 BONUS_OBJ := $(addprefix $(BIN_PATH), $(BONUS_FILES:%.c=%.o))
 
@@ -72,12 +75,12 @@ ifeq ($(wildcard $(BONUS_NAME)),)
 	@echo " "
 endif
 
-$(BIN_PATH)%.o: $(SRC_PATH)%.c
+$(BIN_PATH)%.o: $(SRC_PATH)%.c $(HEADER)
 	@printf "$(GREEN)[Compiling]$(COLOR_LIMITER) $(notdir $<)..."
 	@echo " "
 	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER_PATH)
 
-$(BIN_PATH)%.o: $(BONUS_SRC_PATH)%.c
+$(BIN_PATH)%.o: $(BONUS_SRC_PATH)%.c $(BONUS_HEADER)
 	@printf "$(GREEN)[Compiling]$(COLOR_LIMITER) $(notdir $<)..."
 	@echo " "
 	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER_PATH)
