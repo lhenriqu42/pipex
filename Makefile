@@ -94,7 +94,7 @@ clean:
 fclean: clean
 	@printf "$(RED)[Removing $(notdir $(NAME))...]$(COLOR_LIMITER)\n"
 	@make fclean -C $(LIB_PATH) --no-print-directory
-	@rm -rf $(NAME)
+	@rm -rf $(NAME) $(BONUS_NAME)
 
 re: fclean
 	@make --no-print-directory
