@@ -6,46 +6,60 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 12:30:42 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/02/03 15:58:48 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/02/04 12:33:47 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static char	**get_commands(int argc, char *argv[])
+static void	fill_cmd(int cmdc, char *cmdv[], t_cmd *cmds, int i)
 {
-	char	**cmds;
-	int		i;
-	int		j;
-
-	cmds = ft_calloc((argc - 2), sizeof(char *));
-	j = 0;
-	i = 2;
-	while (i < argc)
-		cmds[j++] = argv[i++];
-	cmds[j] = NULL;
-	return (cmds);
+	static int	last_pipe_read;
+	int			pipe_fd[2];
+	
+	cmds[i].cmd = cmdv[i];
+	if (i == 0)
+	{
+		pipe(pipe_fd);
+		cmds[i].r_fd = get_pipex()->file_in_fd;
+		cmds[i].w_fd = pipe_fd[WRITE_FD];
+		last_pipe_read = pipe_fd[READ_FD];
+	}
+	else if (i == (cmdc - 1))
+	{
+		cmds[i].r_fd = last_pipe_read;
+		cmds[i].w_fd = get_pipex()->file_out_fd;
+	}
+	else
+	{
+		pipe(pipe_fd);
+		cmds[i].r_fd = last_pipe_read;
+		cmds[i].w_fd = pipe_fd[WRITE_FD];
+		last_pipe_read = pipe_fd[READ_FD];
+	}
 }
 
-static int	**get_pipes(int argc)
+static t_cmd	*get_commands(int cmdc, char *cmdv[])
 {
-	int	**pipes;
-	int	i;
+	t_cmd	*cmds;
+	int		i;
 
+	cmds = ft_calloc(cmdc + 1, sizeof(t_cmd));
 	i = 0;
-	pipes = ft_calloc((argc - 2), sizeof(int *));
-	while (i < (argc - 3))
+	while (i < cmdc)
 	{
-		pipes[i] = ft_calloc(2, sizeof(int));
+		fill_cmd(cmdc, cmdv, cmds, i);
 		i++;
 	}
-	pipes[i] = NULL;
+	return (cmds);
 }
 
 void	init_pipex(int argc, char *argv[], char *envp[])
 {
 	t_pipex	*pipex;
+	int		cmdc;
 
+	cmdc = (argc - 3);
 	pipex = get_pipex();
 	pipex->file_in_fd = open(argv[1], O_RDONLY);
 	if (pipex->file_in_fd < 0)
@@ -58,9 +72,9 @@ void	init_pipex(int argc, char *argv[], char *envp[])
 			);
 	if (pipex->file_out_fd < 0)
 		perror(C_ERROR "invalid output file" C_BREAK);
+	pipex->cmds = get_commands(cmdc, (argv + 2));
 	pipex->env = get_env_variables(envp);
-	pipex->cmds = get_commands(argc, argv);
+	pipex->pids = ft_calloc(cmdc, sizeof(int));
 	pipex->envp = envp;
-	pipex->pipes = get_pipes(argc);
-	pipex->pids = ft_calloc((argc - 3), sizeof(int));
+	pipex->cmdc = cmdc;
 }

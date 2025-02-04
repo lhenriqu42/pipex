@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 12:47:16 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/02/03 15:21:26 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/02/04 12:30:38 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,26 @@ enum e_fd
 	WRITE_FD
 };
 
-enum e_type
-{
-	FIRST,
-	LAST
-};
-
-typedef struct s_env
+typedef struct t_env
 {
 	char	*home;
 	char	**path;
 }	t_env;
 
+typedef struct s_cmd
+{
+	char	*cmd;
+	int		r_fd;
+	int		w_fd;
+}	t_cmd;
+
 typedef struct s_pipex
 {
 	int		file_in_fd;
 	int		file_out_fd;
-	int		**pipes;
 	int		*pids;
-	char	**cmds;
-	
+	t_cmd	*cmds;
+	int		cmdc;
 	char	**envp;
 	t_env	env;
 }	t_pipex;
@@ -64,7 +64,7 @@ t_pipex	*get_pipex(void);
 t_env	get_env_variables(char **envp);
 char	*handle_path(char*cmd, t_env env);
 
-void	exec_process(t_pipex *pipex, char *cmd, int type);
+void	exec_process(t_cmd cmd);
 void	init_pipex(int argc, char *argv[], char *envp[]);
 void	print_error(char *message);
 void	close_fds(t_pipex *pipex);

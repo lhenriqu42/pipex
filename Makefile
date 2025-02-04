@@ -74,13 +74,13 @@ endif
 
 $(BIN_PATH)%.o: $(SRC_PATH)%.c
 	@printf "$(GREEN)[Compiling]$(COLOR_LIMITER) $(notdir $<)..."
-	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER_PATH)
 	@echo " "
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER_PATH)
 
 $(BIN_PATH)%.o: $(BONUS_SRC_PATH)%.c
 	@printf "$(GREEN)[Compiling]$(COLOR_LIMITER) $(notdir $<)..."
-	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER_PATH)
 	@echo " "
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER_PATH)
 
 clean:
 	@printf "$(RED)[Removing Objects...]$(COLOR_LIMITER)\n"

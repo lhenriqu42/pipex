@@ -6,30 +6,31 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 13:22:25 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/02/03 15:04:16 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/02/04 12:22:53 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static void	exec_cmd1(t_pipex *pipex)
+static void	exec_cmds(t_pipex *pipex)
 {
-	pipex->pid[0] = fork();
-	if (pipex->pid[0] == PID_CHILD)
-		exec_process(pipex, pipex->cmd1, FIRST);
-}
-
-static void	exec_cmd2(t_pipex *pipex)
-{
-	pipex->pid[1] = fork();
-	if (pipex->pid[1] == PID_CHILD)
-		exec_process(pipex, pipex->cmd2, LAST);
+	int	i;
+	
+	i = 0;
+	while (i < pipex->cmdc)
+	{
+		pipex->pids[i] = fork();
+		if (pipex->pids[i] == PID_CHILD)
+			exec_process(pipex->cmds[i]);
+		
+	}
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipex	*pipex;
-
+	int		i;
+	
 	pipex = get_pipex();
 	if (argc != 5)
 	{
@@ -37,12 +38,11 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	}
 	init_pipex(argc, argv, envp);
-	pipe(pipex->pipe);
-	exec_cmd1(pipex);
-	exec_cmd2(pipex);
+	exec_cmds(pipex);
 	close_fds(pipex);
-	waitpid(pipex->pid[0], 0, 0);
-	waitpid(pipex->pid[1], 0, 0);
+	i = 0;
+	while (i < pipex->cmdc)
+		waitpid(pipex->pids[i++], 0, 0);
 	free_all(pipex);
 	return (0);
 }
